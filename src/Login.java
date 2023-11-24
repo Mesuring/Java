@@ -27,7 +27,6 @@ public class Login extends JPanel implements ActionListener {
         textArea = new JTextArea(25, 20);
         textArea.setEditable(false);
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
 
         //Add Components to this panel.
         GridBagConstraints c = new GridBagConstraints();
@@ -42,7 +41,6 @@ public class Login extends JPanel implements ActionListener {
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 100.0;
         c.weighty = 150.0;
-        add(scrollPane, c);
 
         //Adcionando para ele ler a função this/actionPerformed
         btn1.addActionListener(this);
@@ -64,8 +62,15 @@ public class Login extends JPanel implements ActionListener {
         frame.add(new Login());
 
         //Display the window.
+
         frame.pack();
+        frame.setSize(275,200);
         frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+
+
     }
 
     public static void main(String[] args) {

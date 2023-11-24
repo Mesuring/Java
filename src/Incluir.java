@@ -115,7 +115,11 @@ public class Incluir extends JPanel implements ActionListener{
 
         //Mostra a janela
         frame.pack();
+        frame.setSize(800,500);
         frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {
