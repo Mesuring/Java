@@ -1,22 +1,44 @@
 package bd;
-import bd.core;
-import bd.daos;
-import java.sql.NewPreparedStatement;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.sql.Statement;
 public class Conexao {
-    public static final NewPreparedStatement COMANDO; /*letra maiuscula para escrever nomes de constantes*/
 
-    static { // construtor - Responsável por inicializar
-        NewPreparedStatement comando = null;
+    static java.sql.Connection contato =  null;
 
-        try {
-            comando = new NewPreparedStatement (
-                    "com.microsoft.sqlserver.jdbc.SQLServerDriver", //driver
-                    "jdbc:sqlserver://regulus.cotuca.unicamp.br:1433;databasename=BD", //str de conexao
-                    "USUARIO", "SENHA");
-        } catch (Exception e) {
-            System.out.println("Problemas de conexão com o BD");
-            System.out.println(0); //aborta o programa
+    public static Conexao getConexion() {
+        String url = "jdbc:sqlserver://regulus.cotuca.unicamp.br:1433;databaseName=pra";
+
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null,"Não foi Possível a Conexão... Revisar Driver" + e.getMessage(),
+            "Erro de Conexão", JOptionPane.ERROR_MESSAGE);
         }
+        try {
+            contato = DriverManager.getConnection(url, "BD23334","BD23334");
+        } catch (SQLServerException e) {
+            JOptionPane.showMessageDialog(null,"Erro"+ e.getMessage(),
+                    "Erro de Conexão", JOptionPane.ERROR_MESSAGE);
+        }
+        return contato;
+    }
+    public static ResultSet Consulta(String consulta) {
+        Conexao con = getConexion();
+        Statement declara;
+        try {
+            declara = con.createStatement();
+            ResultSet resposta = declara.executeQuery(consulta);
+            return resposta;
+        }catch (SQLServerException e) {
+            JOptionPane.showMessageDialog(null,"Erro"+ e.getMessage(),
+                    "Erro de Conexão", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
     }
 }
