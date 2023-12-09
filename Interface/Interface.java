@@ -163,6 +163,7 @@ public class Interface {
 
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             preparedStatement.setString(1, user);
+            preparedStatement.setString(2, pass);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 return resultSet.next();
